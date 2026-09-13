@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elijah Miracle — Full-Stack Software Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0A100C;
+    --panel: #131E17;
+    --panel-2: #182620;
+    --border: #22322A;
+    --text: #E8ECE6;
+    --text-muted: #94A599;
+    --text-faint: #5E6E64;
+    --emerald: #6FCF97;
+    --emerald-deep: #35704F;
+    --emerald-glow: rgba(111,207,151,0.14);
+    --gold: #D8A657;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+  body{
+    background: radial-gradient(ellipse 900px 500px at 12% -8%, rgba(111,207,151,0.08), transparent 60%), var(--bg);
+    color: var(--text);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--emerald); outline-offset:3px;}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 28px;}
+  svg{display:inline-block; vertical-align:middle;}
+
+  nav{position:sticky; top:0; z-index:40; background:#0C1410; border-bottom:1px solid var(--border);}
+  .nav-inner{display:flex; align-items:center; justify-content:space-between; height:64px;}
+  .brand{font-family:'Bricolage Grotesque', sans-serif; font-weight:600; font-size:1.05rem; text-decoration:none;}
+  .brand span{color:var(--emerald);}
+  .nav-links{display:flex; gap:28px; list-style:none;}
+  .nav-links a{font-size:0.9rem; text-decoration:none; color:var(--text-muted); transition:color .15s ease;}
+  .nav-links a:hover{color:var(--text);}
+  .nav-toggle{display:none; background:none; border:none; color:var(--text); cursor:pointer; padding:6px;}
+  .nav-mobile{display:none; flex-direction:column; gap:2px; padding:8px 0 18px;}
+  .nav-mobile a{padding:10px 0; text-decoration:none; color:var(--text-muted); font-size:0.95rem; border-top:1px solid var(--border);}
+  @media (max-width:720px){
+    .nav-links{display:none;}
+    .nav-toggle{display:inline-flex;}
+    .nav-mobile.open{display:flex;}
+  }
+
+  .hero{padding:84px 0 76px;}
+  .hero-grid{display:grid; grid-template-columns:1.05fr 0.95fr; gap:52px; align-items:center;}
+  @media (max-width:880px){.hero-grid{grid-template-columns:1fr; gap:40px;} .hero{padding:48px 0 56px;}}
+  .kicker{font-family:'JetBrains Mono', monospace; font-size:0.82rem; color:var(--emerald); margin-bottom:18px;}
+  h1{font-family:'Bricolage Grotesque', sans-serif; font-weight:600; font-size:clamp(2.5rem,5vw,3.7rem); line-height:1.06; letter-spacing:-0.01em; margin-bottom:22px;}
+  h1 em{font-style:normal; color:var(--emerald);}
+  .lede{font-size:1.06rem; color:var(--text-muted); max-width:50ch; margin-bottom:30px;}
+  .lede strong{color:var(--text); font-weight:600;}
+  .actions{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:34px;}
+  .btn{display:inline-flex; align-items:center; gap:8px; padding:12px 22px; font-size:0.92rem; font-weight:500; text-decoration:none; border-radius:4px; cursor:pointer; border:1px solid transparent; transition:background .15s ease, border-color .15s ease, color .15s ease;}
+  .btn-primary{background:var(--emerald); color:#0A140F;}
+  .btn-primary:hover{background:#84DBA9;}
+  .btn-ghost{border-color:var(--border); color:var(--text);}
+  .btn-ghost:hover{border-color:var(--emerald); color:var(--emerald);}
+  .meta-row{display:flex; gap:20px; flex-wrap:wrap; font-size:0.85rem; color:var(--text-faint);}
+  .meta-row span{display:inline-flex; align-items:center; gap:7px;}
+  .meta-row svg{width:14px; height:14px;}
+
+  .explorer{background:var(--panel); border:1px solid var(--border); border-radius:8px; overflow:hidden; box-shadow:0 24px 60px -24px rgba(0,0,0,0.6);}
+  .explorer-head{display:flex; align-items:center; gap:8px; padding:12px 16px; background:var(--panel-2); border-bottom:1px solid var(--border); font-family:'JetBrains Mono', monospace; font-size:0.74rem; color:var(--text-faint);}
+  .explorer-head .dot{width:8px; height:8px; border-radius:50%; background:var(--emerald-deep);}
+  .explorer-body{padding:16px 14px 20px;}
+  .file-row{display:flex; align-items:center; gap:9px; padding:7px 8px; border-radius:4px; font-family:'JetBrains Mono', monospace; font-size:0.82rem; color:var(--text-muted); opacity:0; transform:translateX(-6px); animation:fileIn .35s ease forwards;}
+  .file-row.folder{color:var(--emerald); font-weight:500;}
+  .file-row svg{width:15px; height:15px; flex-shrink:0; opacity:0.85;}
+  @keyframes fileIn{to{opacity:1; transform:translateX(0);}}
+  .explorer-footer{margin-top:10px; padding-top:14px; border-top:1px dashed var(--border); font-family:'JetBrains Mono', monospace; font-size:0.74rem; color:var(--text-faint); display:flex; justify-content:space-between;}
+  .explorer-footer .ok{color:var(--emerald);}
+
+  section{padding:60px 0;}
+  .section-head{margin-bottom:36px;}
+  .section-head h2{font-family:'Bricolage Grotesque', sans-serif; font-weight:600; font-size:1.7rem;}
+  .section-head p{color:var(--text-muted); margin-top:8px; max-width:54ch;}
+
+  .project{display:grid; grid-template-columns:190px 1fr; gap:32px; padding:30px 0; border-top:1px solid var(--border);}
+  .project:last-child{border-bottom:1px solid var(--border);}
+  @media (max-width:720px){.project{grid-template-columns:1fr; gap:12px;}}
+  .project-tag{font-family:'JetBrains Mono', monospace; font-size:0.78rem; color:var(--text-faint);}
+  .project h3{font-family:'Bricolage Grotesque', sans-serif; font-weight:600; font-size:1.28rem; margin-bottom:10px;}
+  .project p{color:var(--text-muted); max-width:62ch; margin-bottom:14px;}
+  .tag-row{display:flex; gap:8px; flex-wrap:wrap;}
+  .tag{font-family:'JetBrains Mono', monospace; font-size:0.73rem; color:var(--emerald); background:var(--emerald-glow); border:1px solid var(--emerald-deep); padding:3px 9px; border-radius:4px;}
+
+  .timeline{display:flex; flex-direction:column; gap:30px; border-left:2px solid var(--border); padding-left:26px;}
+  .tl-item{position:relative;}
+  .tl-item::before{content:""; position:absolute; left:-31px; top:6px; width:10px; height:10px; border-radius:50%; background:var(--emerald); box-shadow:0 0 0 4px var(--bg), 0 0 0 5px var(--border);}
+  .tl-date{font-family:'JetBrains Mono', monospace; font-size:0.78rem; color:var(--text-faint); display:block; margin-bottom:6px;}
+  .tl-role{font-weight:600; font-size:1rem;}
+  .tl-org{color:var(--emerald); font-size:0.9rem; margin-bottom:8px;}
+  .tl-desc{color:var(--text-muted); max-width:58ch; font-size:0.94rem;}
+
+  .skill-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:28px 40px;}
+  @media (max-width:620px){.skill-grid{grid-template-columns:1fr;}}
+  .skill-label{font-size:0.82rem; color:var(--text-faint); margin-bottom:10px;}
+  .pill-row{display:flex; flex-wrap:wrap; gap:9px;}
+  .pill{padding:7px 13px; background:var(--panel); border:1px solid var(--border); border-radius:20px; font-size:0.85rem;}
+
+  footer{background:var(--panel-2); border-top:1px solid var(--border); padding:60px 0 36px; margin-top:20px;}
+  footer h2{font-family:'Bricolage Grotesque', sans-serif; font-weight:600; font-size:2rem; margin-bottom:14px; max-width:16ch;}
+  footer .wrap > p{color:var(--text-muted); max-width:46ch; margin-bottom:26px;}
+  .footer-links{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:44px;}
+  .footer-link{display:inline-flex; align-items:center; gap:9px; text-decoration:none; color:var(--text); font-size:0.92rem; border:1px solid var(--border); padding:10px 16px; border-radius:5px; transition:border-color .15s ease, color .15s ease;}
+  .footer-link:hover{border-color:var(--emerald); color:var(--emerald);}
+  .footer-link svg{width:15px; height:15px;}
+  .footer-bottom{display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; padding-top:22px; border-top:1px solid var(--border); font-size:0.8rem; color:var(--text-faint);}
+
+  /* SCROLL PROGRESS */
+  #scrollBar{
+    position:fixed; top:0; left:0; height:2px; width:0%;
+    background: linear-gradient(90deg, var(--emerald-deep), var(--emerald));
+    z-index:60; transition: width .08s linear;
+  }
+
+  /* CURSOR SPOTLIGHT (project rows + pills) — desktop/hover-capable only */
+  @media (hover: hover){
+    .project, .pill{ position:relative; overflow:hidden; }
+    .project::before, .pill::before{
+      content:"";
+      position:absolute; inset:0;
+      background: radial-gradient(220px circle at var(--mx,50%) var(--my,50%), var(--emerald-glow), transparent 70%);
+      opacity:0; transition: opacity .25s ease;
+      pointer-events:none;
+    }
+    .project:hover::before, .pill:hover::before{ opacity:1; }
+    .project{ border-left:2px solid transparent; transition: border-color .25s ease, background .25s ease; }
+    .project:hover{ border-left-color: var(--emerald-deep); }
+  }
+
+  /* MAGNETIC PRIMARY BUTTON */
+  .btn-primary{ transition: transform .18s cubic-bezier(.2,.8,.2,1), background .15s ease; }
+
+  /* SCROLL REVEAL */
+  .reveal{ opacity:0; transform:translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.in-view{ opacity:1; transform:translateY(0); }
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ opacity:1; transform:none; transition:none; }
+    .project::before, .pill::before{ display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div id="scrollBar"></div>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a href="#" class="brand">Elijah<span>.</span>Miracle</a>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <svg id="iconMenu" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+      <svg id="iconClose" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none;"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
+    </button>
+  </div>
+  <div class="wrap nav-mobile" id="navMobile">
+    <a href="#work">Work</a>
+    <a href="#experience">Experience</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="kicker">Full-Stack Software Engineer</div>
+      <h1>Building software, and getting closer to <em>the systems it runs on</em>.</h1>
+      <p class="lede">I'm <strong>Elijah Miracle</strong>, a full-stack engineer in Lagos working across Python, Java, JavaScript and TypeScript — and I'm deliberately growing toward DevOps, cloud engineering, and database administration next.</p>
+      <div class="actions">
+        <a href="#work" class="btn btn-primary">See my projects</a>
+        <a href="#contact" class="btn btn-ghost">Get in touch</a>
+      </div>
+      <div class="meta-row">
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg> elijahmiracle2007@gmail.com</span>
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg> github.com/BIGDUKE004</span>
+        <span>Sabo, Yaba, Lagos</span>
+      </div>
+    </div>
+
+    <div class="explorer" aria-hidden="true">
+      <div class="explorer-head"><span class="dot"></span> EXPLORER — projects</div>
+      <div class="explorer-body" id="explorerBody"></div>
+    </div>
+  </div>
+</header>
+
+<section id="work">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>Selected work</h2>
+      <p>Projects built independently and through an intensive full-stack bootcamp since February 2026.</p>
+    </div>
+
+    <div class="project reveal">
+      <div class="project-tag">2026</div>
+      <div>
+        <h3>Event Ticketing System</h3>
+        <p>A platform where attendees browse events, book tickets, and get instant confirmations — plus an organizer-facing flow to create and manage events. Designed the MySQL schema behind events, bookings, and organizer records.</p>
+        <div class="tag-row"><span class="tag">Python</span><span class="tag">MySQL</span><span class="tag">REST APIs</span></div>
+      </div>
+    </div>
+
+    <div class="project reveal">
+      <div class="project-tag">2026</div>
+      <div>
+        <h3>Pharmacy Inventory System</h3>
+        <p>A backend system for pharmacy stock management — full create/read/update/delete on inventory records, with a data model built to keep stock levels accurate and updates reliable.</p>
+        <div class="tag-row"><span class="tag">Java</span><span class="tag">MySQL</span><span class="tag">CRUD</span></div>
+      </div>
+    </div>
+
+    <div class="project reveal">
+      <div class="project-tag">2026</div>
+      <div>
+        <h3>Ride-Hailing App</h3>
+        <p>Web frontend for a ride-hailing platform, structured around rider and driver flows, backed by independent microservices for booking, user management, and trip handling.</p>
+        <div class="tag-row"><span class="tag">React</span><span class="tag">Microservices</span></div>
+      </div>
+    </div>
+
+    <div class="project reveal">
+      <div class="project-tag">2026</div>
+      <div>
+        <h3>Currency Converter</h3>
+        <p>A converter pulling live exchange rates from an external API, using TypeScript throughout for predictable data handling and type-safe conversions.</p>
+        <div class="tag-row"><span class="tag">TypeScript</span><span class="tag">Live API</span></div>
+      </div>
+    </div>
+
+    <div class="project reveal">
+      <div class="project-tag">2026</div>
+      <div>
+        <h3>Portfolio Website</h3>
+        <p>An earlier personal site, containerized with Docker for consistent, reproducible deployment.</p>
+        <div class="tag-row"><span class="tag">HTML/CSS/JS</span><span class="tag">Docker</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="section-head reveal"><h2>Experience & training</h2></div>
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <span class="tl-date">Feb 2026 — Present</span>
+        <div class="tl-role">Software Engineering & Techpreneurship Program</div>
+        <div class="tl-org">Semicolon Africa</div>
+        <div class="tl-desc">Intensive full-stack bootcamp covering Java, Python, JavaScript, Django, Golang, REST APIs, FastAPI, databases and algorithms, taught alongside Lagos Business School techpreneurship modules.</div>
+      </div>
+      <div class="tl-item reveal">
+        <span class="tl-date">2026</span>
+        <div class="tl-role">Freelance Software Developer</div>
+        <div class="tl-org">Self-Employed · Lagos, Nigeria</div>
+        <div class="tl-desc">Rebuilt and modernized a client website, improving structure, layout and usability. Designed and delivered a personalized digital email card for a client.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head reveal"><h2>Skills</h2></div>
+    <div class="skill-grid reveal">
+      <div>
+        <div class="skill-label">Languages</div>
+        <div class="pill-row"><span class="pill">Java</span><span class="pill">Python</span><span class="pill">JavaScript</span><span class="pill">TypeScript</span></div>
+      </div>
+      <div>
+        <div class="skill-label">Frontend</div>
+        <div class="pill-row"><span class="pill">HTML</span><span class="pill">CSS</span><span class="pill">JavaScript</span><span class="pill">React</span></div>
+      </div>
+      <div>
+        <div class="skill-label">Backend & APIs</div>
+        <div class="pill-row"><span class="pill">Django</span><span class="pill">FastAPI</span><span class="pill">REST APIs</span><span class="pill">Microservices</span></div>
+      </div>
+      <div>
+        <div class="skill-label">Databases</div>
+        <div class="pill-row"><span class="pill">MySQL</span><span class="pill">PostgreSQL</span><span class="pill">MongoDB</span></div>
+      </div>
+      <div>
+        <div class="skill-label">Tools & DevOps</div>
+        <div class="pill-row"><span class="pill">Docker</span><span class="pill">Git / GitHub</span></div>
+      </div>
+      <div>
+        <div class="skill-label">Core CS</div>
+        <div class="pill-row"><span class="pill">Data Structures & Algorithms</span><span class="pill">Software Engineering Principles</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <h2>Let's build something together.</h2>
+    <p>Open to full-time roles and freelance work — currently growing into DevOps and cloud engineering alongside full-stack development.</p>
+    <div class="footer-links">
+      <a href="mailto:elijahmiracle2007@gmail.com" class="footer-link"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg> Email</a>
+      <a href="tel:+2347039578537" class="footer-link"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Call</a>
+      <a href="https://github.com/BIGDUKE004" target="_blank" rel="noreferrer" class="footer-link"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg> GitHub</a>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Elijah Miracle</span>
+      <span>Lagos, Nigeria</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const navToggle = document.getElementById('navToggle');
+  const navMobile = document.getElementById('navMobile');
+  const iconMenu = document.getElementById('iconMenu');
+  const iconClose = document.getElementById('iconClose');
+  navToggle.addEventListener('click', () => {
+    const open = navMobile.classList.toggle('open');
+    iconMenu.style.display = open ? 'none' : 'inline-block';
+    iconClose.style.display = open ? 'inline-block' : 'none';
+  });
+  navMobile.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navMobile.classList.remove('open');
+    iconMenu.style.display = 'inline-block';
+    iconClose.style.display = 'none';
+  }));
+
+  const files = [
+    { type: 'file', name: 'event-ticketing-system.py' },
+    { type: 'file', name: 'pharmacy-inventory.java' },
+    { type: 'folder', name: 'ride-hailing-app' },
+    { type: 'file', name: '├─ web/', indent: true },
+    { type: 'file', name: '└─ services/', indent: true },
+    { type: 'file', name: 'currency-converter.ts' },
+    { type: 'file', name: 'portfolio-site/Dockerfile' },
+  ];
+  const fileIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><path d="M14 2v6h6"/></svg>';
+  const folderIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg>';
+
+  const body = document.getElementById('explorerBody');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function buildRow(f){
+    const row = document.createElement('div');
+    row.className = 'file-row' + (f.type === 'folder' ? ' folder' : '');
+    row.style.paddingLeft = f.indent ? '22px' : '8px';
+    row.innerHTML = (f.type === 'folder' ? folderIcon : fileIcon) + f.name;
+    return row;
+  }
+
+  if(reduced){
+    files.forEach(f => body.appendChild(buildRow(f)));
+    const footer = document.createElement('div');
+    footer.className = 'explorer-footer';
+    footer.innerHTML = '<span>5 repositories</span><span class="ok">● containerized</span>';
+    body.appendChild(footer);
+  } else {
+    let i = 0;
+    const iv = setInterval(() => {
+      if(i >= files.length){
+        clearInterval(iv);
+        const footer = document.createElement('div');
+        footer.className = 'explorer-footer';
+        footer.innerHTML = '<span>5 repositories</span><span class="ok">● containerized</span>';
+        body.appendChild(footer);
+        return;
+      }
+      body.appendChild(buildRow(files[i]));
+      i++;
+    }, 110);
+  }
+</script>
+
+<script>
+  // scroll progress bar
+  const scrollBar = document.getElementById('scrollBar');
+  function updateScrollBar(){
+    const h = document.documentElement;
+    const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+    scrollBar.style.width = (scrolled || 0) + '%';
+  }
+  document.addEventListener('scroll', updateScrollBar, { passive: true });
+  updateScrollBar();
+
+  const hasHover = window.matchMedia('(hover: hover)').matches;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // cursor-spotlight on project rows and skill pills
+  if(hasHover && !reducedMotion){
+    document.querySelectorAll('.project, .pill').forEach(el => {
+      el.addEventListener('mousemove', e => {
+        const r = el.getBoundingClientRect();
+        el.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+        el.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+      });
+    });
+
+    // magnetic primary button
+    document.querySelectorAll('.btn-primary').forEach(btn => {
+      btn.addEventListener('mousemove', e => {
+        const r = btn.getBoundingClientRect();
+        const x = (e.clientX - r.left - r.width / 2) * 0.25;
+        const y = (e.clientY - r.top - r.height / 2) * 0.35;
+        btn.style.transform = `translate(${x}px, ${y}px)`;
+      });
+      btn.addEventListener('mouseleave', () => { btn.style.transform = 'translate(0,0)'; });
+    });
+  }
+
+  // scroll reveal
+  if(!reducedMotion && 'IntersectionObserver' in window){
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if(entry.isIntersecting){
+          entry.target.style.transitionDelay = (i % 5) * 60 + 'ms';
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    // safety net: never let content stay invisible
+    setTimeout(() => document.querySelectorAll('.reveal:not(.in-view)').forEach(el => el.classList.add('in-view')), 2500);
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('in-view'));
+  }
+
+  // a little something for anyone who opens devtools
+  console.log('%cLooking for a full-stack engineer who is also chasing DevOps and cloud?', 'color:#6FCF97; font-family:monospace; font-size:13px;');
+  console.log('%celijahmiracle2007@gmail.com — github.com/BIGDUKE004', 'color:#94A599; font-family:monospace; font-size:12px;');
+</script>
+
+</body>
+</html>
