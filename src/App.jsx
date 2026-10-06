@@ -7,17 +7,6 @@ const email = 'mailto:elijahmiracle2007@gmail.com'
 const projects = [
   {
     number: '01',
-    title: 'Event Ticketing System',
-    type: 'Backend / API',
-    description:
-      'A REST API for event management and ticketing, built with FastAPI and SQLAlchemy. The backend is split into focused modules for authentication, events, bookings, payments, tickets and ticket types.',
-    stack: ['Python', 'FastAPI', 'SQLAlchemy', 'MySQL', 'JWT', 'REST'],
-    repo: null,
-    live: null,
-    status: 'Built',
-  },
-  {
-    number: '02',
     title: 'Event Ticketing Web Client',
     type: 'Frontend',
     description:
@@ -25,6 +14,17 @@ const projects = [
     stack: ['HTML', 'CSS', 'JavaScript'],
     repo: null,
     live: 'https://eventpadi-steel.vercel.app',
+    status: 'Built',
+  },
+  {
+    number: '02',
+    title: 'Event Ticketing System',
+    type: 'Backend / API',
+    description:
+      'A REST API for event management and ticketing, built with FastAPI and SQLAlchemy. The backend is split into focused modules for authentication, events, bookings, payments, tickets and ticket types.',
+    stack: ['Python', 'FastAPI', 'SQLAlchemy', 'MySQL', 'JWT', 'REST'],
+    repo: null,
+    live: null,
     status: 'Built',
   },
   {
