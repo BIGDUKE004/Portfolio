@@ -1,33 +1,11 @@
-# Elijah Miracle — React Portfolio
+# Elijah Miracle Portfolio
 
-A React + Vite portfolio for Elijah Miracle.
-
-## Stack
-- React
-- Vite
-- JavaScript
-- CSS
-
-## Languages shown
-The portfolio lists Java, Python and JavaScript. TypeScript is intentionally not listed.
-
-## Run locally
+React + Vite. Content lives in `src/data.js`; design tokens are CSS variables at the top of `src/styles.css`.
 
 ```bash
 npm install
-npm run dev
+npm run dev      # local dev server
+npm run build    # production build in dist/
 ```
 
-## Build
-
-```bash
-npm run build
-```
-
-## Portfolio decisions
-
-- The unfinished Event Ticketing frontend is excluded completely.
-- The Java Event Ticketing project is excluded completely.
-- Project buttons use live/hosted URLs when a verified deployment URL is available.
-- No GitHub repository link is presented as a substitute for a live project URL.
-- No deployment URL is invented when it cannot be verified from the public project information.
+Deploy `dist/` to Vercel, Netlify or any static host (Vercel: framework preset "Vite").
