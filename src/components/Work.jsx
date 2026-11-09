@@ -6,18 +6,18 @@ import eventpad from "../assets/shot-eventpad.webp";
 import chemist from "../assets/shot-chemist.webp";
 import ecommerce from "../assets/shot-ecommerce.webp";
 
-// Real screenshots of the live apps, by project index (Project 02 is a backend, so it keeps an illustration)
-const SHOTS = [
-  { src: eventpad, alt: "EventPad home page: a dark interface with the headline 'Find the night. Keep the stub.', an event search bar and an 'Up next' ticket card for a Lagos jazz event" },
-  null,
-  { src: chemist, alt: "Chemist Management System sign-in page: headline 'Know what's on the shelf, before it's not', with Stock, Sales and Staff highlights and a registration form" },
-  { src: ecommerce, alt: "SHOP.CO e-commerce home page with a navigation bar, product search and the headline 'Find clothes that match your style'" },
-];
+// Real screenshots of the live apps, keyed by project `shot`; projects without one keep an illustration
+const SHOTS = {
+  eventpad: { src: eventpad, alt: "EventPad home page: a dark interface with the headline 'Find the night. Keep the stub.', an event search bar and an 'Up next' ticket card for a Lagos jazz event" },
+  chemist: { src: chemist, alt: "Chemist Management System sign-in page: headline 'Know what's on the shelf, before it's not', with Stock, Sales and Staff highlights and a registration form" },
+  ecommerce: { src: ecommerce, alt: "SHOP.CO e-commerce home page with a navigation bar, product search and the headline 'Find clothes that match your style'" },
+};
 
 export default function Work() {
   const [i, setI] = useState(0);
   const tabs = useRef([]);
   const p = PROJECTS[i];
+  const shot = p.shot ? SHOTS[p.shot] : null;
   const count = PROJECTS.length;
 
   const onKeyDown = (e) => {
@@ -36,7 +36,7 @@ export default function Work() {
         <Reveal>
           <p className="lab">SELECTED WORK</p>
           <h2>Projects built to <em>solve problems</em>.</h2>
-          <p className="sub">I’d rather show working systems than fill a portfolio with tutorials.</p>
+          <p className="sub">Full-stack systems with authentication, payments, tests and real deployments, not tutorial clones.</p>
         </Reveal>
 
         <div className="work-grid">
@@ -55,17 +55,17 @@ export default function Work() {
           </div>
 
           <div key={i} className="panel" role="tabpanel" id="panel" aria-labelledby={`tab${i}`}>
-            {SHOTS[i] ? (
+            {shot && p.live ? (
               <figure className="viz shot" style={{ margin: 0 }}>
                 <div className="shot-bar">{new URL(p.live).host}</div>
                 <a href={p.live} {...EXT} aria-label={`Open ${p.name}`}>
-                  <img src={SHOTS[i].src} width="1310" height="615" alt={SHOTS[i].alt} />
+                  <img src={shot.src} width="1310" height="615" alt={shot.alt} />
                 </a>
                 <figcaption>Screenshot of the live application</figcaption>
               </figure>
             ) : (
               <figure className="viz" style={{ margin: 0 }}>
-                <ProjectViz index={i} />
+                <ProjectViz kind={p.viz} />
                 <figcaption>Illustrative composition, not a screenshot</figcaption>
               </figure>
             )}

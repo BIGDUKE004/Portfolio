@@ -10,14 +10,17 @@ const Label = ({ x, y, c = S, children }) => (
   <text x={x} y={y} fill={c} fontSize="11" fontFamily="monospace" textAnchor="middle">{children}</text>
 );
 
-const LABELS = [
-  "Abstract ticket card composition",
-  "Diagram of backend modules around a FastAPI core",
-  "Abstract inventory table composition",
-  "Abstract product grid composition",
-];
+const LABELS = {
+  ticket: "Abstract ticket card composition",
+  workflow: "Diagram of the service request workflow stages",
+  inventory: "Abstract inventory table composition",
+  bank: "Diagram of banking API modules around a Spring Boot core",
+  grid: "Abstract product grid composition",
+  dash: "Abstract dashboard and task list composition",
+};
 
-const MODULES = [["auth", 90, 50], ["events", 310, 50], ["bookings", 60, 130], ["payments", 340, 130], ["tickets", 110, 215], ["ticket types", 290, 215]];
+const BANK = [["transfers", 90, 50], ["airtime", 310, 50], ["history", 60, 130], ["discounts", 340, 130], ["validation", 110, 215], ["audit log", 290, 215]];
+const STAGES = ["pending", "accepted", "inspecting", "approval", "in progress", "completed"];
 
 function Ticket() {
   return <>
@@ -28,11 +31,34 @@ function Ticket() {
     <path d="M120 170h-8M288 170h-8" stroke={S} strokeDasharray="3 3" />
   </>;
 }
-function Api() {
+function Bank() {
   return <>
-    {MODULES.map(([, x, y]) => <path key={x + "-" + y} d={`M200 130L${x} ${y}`} stroke={S} strokeDasharray="3 4" opacity=".6" className="flowline" />)}
-    <Box x={160} y={108} w={80} h={44} fill={C} /><Label x={200} y={135} c={O}>FastAPI</Label>
-    {MODULES.map(([t, x, y]) => <g key={t}><Box x={x - 42} y={y - 16} w={84} h={32} fill={O} stroke={S} /><Label x={x} y={y + 4}>{t}</Label></g>)}
+    {BANK.map(([, x, y]) => <path key={x + "-" + y} d={`M200 130L${x} ${y}`} stroke={S} strokeDasharray="3 4" opacity=".6" className="flowline" />)}
+    <Box x={150} y={108} w={100} h={44} fill={C} /><Label x={200} y={135} c={O}>Spring Boot</Label>
+    {BANK.map(([t, x, y]) => <g key={t}><Box x={x - 42} y={y - 16} w={84} h={32} fill={O} stroke={S} /><Label x={x} y={y + 4}>{t}</Label></g>)}
+  </>;
+}
+function Workflow() {
+  return <>
+    {STAGES.map((t, k) => {
+      const x = 20 + (k % 3) * 124, y = 40 + Math.floor(k / 3) * 100;
+      return <g key={t}>
+        <Box x={x} y={y} w={108} h={56} fill={k === 2 ? G : O} stroke={k === 2 ? C : S} />
+        <Label x={x + 54} y={y + 32} c={k === 2 ? I : S}>{t}</Label>
+        {k % 3 < 2 && <path d={`M${x + 108} ${y + 28}h16`} stroke={S} strokeDasharray="3 3" className="flowline" />}
+      </g>;
+    })}
+    <Box x={20} y={220} w={364} h={22} fill="none" stroke={S} /><Bar x={30} y={229} w={120} c={C} />
+  </>;
+}
+function Dash() {
+  return <>
+    <Box x={30} y={24} w={160} h={100} fill={G} stroke={S} /><Bar x={44} y={40} w={70} c={I} /><Bar x={44} y={60} w={110} /><Bar x={44} y={76} w={90} /><Bar x={44} y={92} w={50} c={C} />
+    <Box x={210} y={24} w={160} h={100} fill={O} stroke={S} /><Bar x={224} y={40} w={60} c={I} /><Bar x={224} y={60} w={100} /><Bar x={224} y={76} w={80} />
+    {[0, 1, 2, 3].map((k) => <g key={k}>
+      <Box x={30} y={146 + k * 26} w={340} h={20} fill="none" stroke={S} /><Box x={40} y={151 + k * 26} w={10} h={10} fill={k < 2 ? C : "none"} stroke={S} />
+      <Bar x={62} y={154 + k * 26} w={120 + k * 20} c={k < 2 ? undefined : I} />
+    </g>)}
   </>;
 }
 function Inventory() {
@@ -61,10 +87,10 @@ function Grid() {
   </>;
 }
 
-export default function ProjectViz({ index }) {
-  const Art = [Ticket, Api, Inventory, Grid][index];
+export default function ProjectViz({ kind }) {
+  const Art = { ticket: Ticket, workflow: Workflow, inventory: Inventory, bank: Bank, grid: Grid, dash: Dash }[kind];
   return (
-    <svg viewBox="0 0 400 260" role="img" aria-label={LABELS[index]}>
+    <svg viewBox="0 0 400 260" role="img" aria-label={LABELS[kind]}>
       <Art />
     </svg>
   );
