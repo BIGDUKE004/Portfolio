@@ -29,7 +29,7 @@ export default function Hero() {
             <Line i={2}><em>works</em>.</Line>
           </h1>
           <p className="lead fx" style={{ "--d": ".75s" }}>
-            I’m Elijah Miracle, a full-stack software engineer who designs, tests and ships secured REST APIs and React front ends with Python (FastAPI), Java (Spring Boot) and TypeScript. I’ve built and deployed a payment-enabled workshop management platform with Paystack and a 169-test automated suite, and I’m expanding into DevOps and cloud engineering.
+            I’m Elijah Miracle, a software engineer who builds applications across the frontend and backend, with experience in Java, Python and JavaScript. I’m also expanding into DevOps and database administration to better understand and work across the full software development lifecycle.
           </p>
           <div className="acts fx" style={{ "--d": ".95s" }}>
             <a className="btn p" href="#work">Explore My Work</a>

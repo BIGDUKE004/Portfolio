@@ -6,12 +6,13 @@ export const EXT = { target: "_blank", rel: "noopener noreferrer" };
 // `viz` picks the illustration in ProjectViz; `shot` picks a real screenshot in Work.jsx (null = illustration).
 export const PROJECTS = [
   {
-    n: "01", id: "motora", viz: "workflow", shot: null, cat: "Full-stack",
+    n: "01", id: "motora", viz: "workflow", shot: "motora", cat: "Full-stack",
     name: "Motora: Car Maintenance Platform",
     status: "Built · deployed",
     desc: "A payment-enabled workshop management platform for two roles, customers and workshop admins. A layered FastAPI backend with 70+ endpoints sits behind a React and TypeScript frontend, deployed on Render and Vercel.",
     tags: ["Python", "FastAPI", "SQLModel", "PostgreSQL", "React", "TypeScript", "Tailwind", "Paystack"],
-    live: null,
+    live: "https://motora-gamma.vercel.app",
+    repo: "https://github.com/BIGDUKE004/Car-Maintenance-System",
     pts: [
       "JWT access and refresh tokens, email verification, password reset, bcrypt hashing and login rate limiting (5 attempts per 15 minutes)",
       "Paystack payments with initialisation, redirect callbacks and webhooks verified with HMAC-SHA512 signatures",
@@ -19,7 +20,6 @@ export const PROJECTS = [
       "Cloudinary image uploads, Resend email notifications and 169 Pytest tests across the service and API layers",
       "About 20 React pages with TanStack Query: a customer portal and an admin dashboard with a request workbench and reports",
     ],
-    note: "The live link for this project is not listed here yet.",
   },
   {
     n: "02", id: "eventpad", viz: "ticket", shot: "eventpad", cat: "Full-stack",
@@ -56,6 +56,7 @@ export const PROJECTS = [
     desc: "A layered Spring Boot REST API for fund transfers, airtime purchases and per-account transaction history, with a tiered discount engine and a request audit log.",
     tags: ["Java 21", "Spring Boot", "Spring Data JPA", "PostgreSQL", "JUnit 5"],
     live: null,
+    repo: "https://github.com/BIGDUKE004/Bank-Transaction-API",
     pts: [
       "DTOs, Bean Validation and custom exceptions for invalid amounts and unknown accounts",
       "BigDecimal for all monetary arithmetic",

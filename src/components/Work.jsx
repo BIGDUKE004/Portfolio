@@ -2,12 +2,14 @@ import { useRef, useState } from "react";
 import { PROJECTS, EXT } from "../data.js";
 import Reveal from "./Reveal.jsx";
 import ProjectViz from "./ProjectViz.jsx";
+import motora from "../assets/shot-motora.webp";
 import eventpad from "../assets/shot-eventpad.webp";
 import chemist from "../assets/shot-chemist.webp";
 import ecommerce from "../assets/shot-ecommerce.webp";
 
 // Real screenshots of the live apps, keyed by project `shot`; projects without one keep an illustration
 const SHOTS = {
+  motora: { src: motora, w: 1314, h: 621, alt: "Motora home page: a dark car-care site with the headline 'The art of automotive care.', a Book Service button and a grey sports car behind the text" },
   eventpad: { src: eventpad, alt: "EventPad home page: a dark interface with the headline 'Find the night. Keep the stub.', an event search bar and an 'Up next' ticket card for a Lagos jazz event" },
   chemist: { src: chemist, alt: "Chemist Management System sign-in page: headline 'Know what's on the shelf, before it's not', with Stock, Sales and Staff highlights and a registration form" },
   ecommerce: { src: ecommerce, alt: "SHOP.CO e-commerce home page with a navigation bar, product search and the headline 'Find clothes that match your style'" },
@@ -59,7 +61,7 @@ export default function Work() {
               <figure className="viz shot" style={{ margin: 0 }}>
                 <div className="shot-bar">{new URL(p.live).host}</div>
                 <a href={p.live} {...EXT} aria-label={`Open ${p.name}`}>
-                  <img src={shot.src} width="1310" height="615" alt={shot.alt} />
+                  <img src={shot.src} width={shot.w || 1310} height={shot.h || 615} alt={shot.alt} />
                 </a>
                 <figcaption>Screenshot of the live application</figcaption>
               </figure>
@@ -77,9 +79,13 @@ export default function Work() {
             <p>{p.desc}</p>
             <ul className="pts">{p.pts.map((t) => <li key={t}>{t}</li>)}</ul>
             <div className="tags">{p.tags.map((t) => <span key={t}>{t}</span>)}</div>
-            {p.live
-              ? <a className="btn p" href={p.live} {...EXT}>View live project</a>
-              : <p className="note">{p.note}</p>}
+            {!p.live && p.note && <p className="note">{p.note}</p>}
+            {(p.live || p.repo) && (
+              <div className="acts">
+                {p.live && <a className="btn p" href={p.live} {...EXT}>View live project</a>}
+                {p.repo && <a className={p.live ? "btn" : "btn p"} href={p.repo} {...EXT}>View code</a>}
+              </div>
+            )}
           </div>
         </div>
       </div>
