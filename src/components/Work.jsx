@@ -10,7 +10,7 @@ import ecommerce from "../assets/shot-ecommerce.webp";
 // Real screenshots of the live apps, keyed by project `shot`; projects without one keep an illustration
 const SHOTS = {
   motora: { src: motora, w: 1314, h: 621, alt: "Motora home page: a dark car-care site with the headline 'The art of automotive care.', a Book Service button and a grey sports car behind the text" },
-  eventpad: { src: eventpad, alt: "EventPad home page: a dark interface with the headline 'Find the night. Keep the stub.', an event search bar and an 'Up next' ticket card for a Lagos jazz event" },
+  eventpad: { src: eventpad, w: 1314, h: 626, alt: "EventPad home page: a dark interface with the headline 'Tickets to the good stuff.', a short line about finding events and hosting with ticket tiers, and a Log in button" },
   chemist: { src: chemist, alt: "Chemist Management System sign-in page: headline 'Know what's on the shelf, before it's not', with Stock, Sales and Staff highlights and a registration form" },
   ecommerce: { src: ecommerce, alt: "SHOP.CO e-commerce home page with a navigation bar, product search and the headline 'Find clothes that match your style'" },
 };
